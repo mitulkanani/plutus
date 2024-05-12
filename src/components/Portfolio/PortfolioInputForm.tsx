@@ -40,7 +40,7 @@ const PortfolioInputForm = () => {
                 formData.append(key, value.toString()); // Convert value to string
             });
 
-            Derivative.Portfolio("http://18.218.201.198:8026/", formData)
+            Derivative.Portfolio("/portfolio/analysis", formData)
                 .then((res) => {
                     console.log(res)
                 }).catch((err) => {

@@ -81,7 +81,7 @@ const LatestNews = () => {
     useEffect(() => {
         setIsSpinner(true)
         if (activeTab === 1) {
-            Derivative.market("http://18.218.201.198:8038/")
+            Derivative.market("/news/latest")
                 .then((res) => {
                     setIsSpinner(false)
                     console.log(res)
@@ -92,7 +92,7 @@ const LatestNews = () => {
                 })
         } else if (activeTab === 2) {
             setNewsData([])
-            Derivative.market("http://18.218.201.198:8032/")
+            Derivative.market("/news/portfolio")
                 .then((res) => {
                     setIsSpinner(false)
                     console.log(res)

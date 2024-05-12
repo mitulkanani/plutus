@@ -59,31 +59,31 @@ export const DifferentMarketsData = [
         id: 1,
         title: "Indian",
         link: "/picks/markets/indian",
-        port: "http://18.218.201.198:8000/"
+        port: "/india"
     },
     {
         id: 2,
         title: "American",
         link: "/picks/markets/american",
-        port: "http://18.218.201.198:8008/"
+        port: "/us"
     },
     {
         id: 3,
         title: "UK",
         link: "/picks/markets/uk",
-        port: "http://18.218.201.198:8014/"
+        port: "/uk"
     },
     {
         id: 4,
         title: "Hongkong",
         link: "/picks/markets/hongkong",
-        port: "http://18.218.201.198:8020/"
+        port: "/hk"
     },
     {
         id: 5,
         title: "Saudi Arebia",
         link: "/picks/markets/saudiarebia",
-        port: "http://18.218.201.198:8001/"
+        port: "/saudi"
     },
 ]
 
@@ -125,56 +125,56 @@ export const intervalsData = [
     {
         id: 1,
         title: "15 minutes",
-        indianPort: "http://18.218.201.198:8003/",
-        usport: "http://18.218.201.198:8009/",
-        ukport: "http://18.218.201.198:8015/",
-        hongkongport: "http://18.218.201.198:8021/",
-        saudiport: "http://18.218.201.198:8027/",
+        indianPort: "/india/15",
+        usport: "/us/15",
+        ukport: "/uk/15",
+        hongkongport: "/hk/15",
+        saudiport: "/saudi/15",
     },
     {
         id: 2,
         title: "30 minutes",
-        indianPort: "http://18.218.201.198:8004/",
-        usport: "http://18.218.201.198:8010/",
-        ukport: "http://18.218.201.198:8016/",
-        hongkongport: "http://18.218.201.198:8022/",
-        saudiport: "http://18.218.201.198:8028/"
+        indianPort: "/india/30",
+        usport: "/us/30",
+        ukport: "/uk/30",
+        hongkongport: "/hk/30",
+        saudiport: "/saudi/30"
     },
     {
         id: 3,
         title: "60 minutes",
-        indianPort: "http://18.218.201.198:8005/",
-        usport: "http://18.218.201.198:8011/",
-        ukport: "http://18.218.201.198:8017/",
-        hongkongport: "http://18.218.201.198:8023/",
-        saudiport: "http://18.218.201.198:8029/"
+        indianPort: "/india/60",
+        usport: "/us/60",
+        ukport: "/uk/60",
+        hongkongport: "/hk/60",
+        saudiport: "/saudi/60"
     },
     {
         id: 4,
         title: "Daily",
-        indianPort: "http://18.218.201.198:8086/",
-        usport: "http://18.218.201.198:8087/",
-        ukport: "http://18.218.201.198:8088/",
-        hongkongport: "http://18.218.201.198:8089/",
-        saudiport: "http://18.218.201.198:8090/"
+        indianPort: "/india/daily",
+        usport: "/us/daily",
+        ukport: "/uk/daily",
+        hongkongport: "/hk/daily",
+        saudiport: "/saudi/daily"
     },
     {
         id: 5,
         title: "Weekly",
-        indianPort: "http://18.218.201.198:8007/",
-        usport: "http://18.218.201.198:8013/",
-        ukport: "http://18.218.201.198:8019/",
-        hongkongport: "http://18.218.201.198:8025/",
-        saudiport: "http://18.218.201.198:8031/"
+        indianPort: "/india/weekly",
+        usport: "/us/weekly",
+        ukport: "/uk/weekly",
+        hongkongport: "/hk/weekly",
+        saudiport: "/saudi/weekly"
     },
     {
         id: 6,
         title: "Monthly",
-        indianPort: "http://18.218.201.198:8006/",
-        usport: "http://18.218.201.198:8012/",
-        ukport: "http://18.218.201.198:8018/",
-        hongkongport: "http://18.218.201.198:8024/",
-        saudiport: "http://18.218.201.198:8030/"
+        indianPort: "/india/monthly",
+        usport: "/us/monthly",
+        ukport: "/uk/monthly",
+        hongkongport: "/uk/monthly",
+        saudiport: "/saudi/monthly"
     },
 ]
 
@@ -234,31 +234,31 @@ export const AnalysisViewRegion = [
         id: 1,
         image: "/svg/flag.svg",
         title: "India",
-        port: "http://18.218.201.198:8049/"
+        port: "/india"
     },
     {
         id: 2,
         image: "/svg/flag.svg",
         title: "US",
-        port: "http://18.218.201.198:8052/"
+        port: "/us"
     },
     {
         id: 3,
         image: "/svg/flag.svg",
         title: "UK",
-        port: "http://18.218.201.198:8051/"
+        port: "/uk"
     },
     {
         id: 4,
         image: "/svg/flag.svg",
         title: "Saudi",
-        port: "http://18.218.201.198:8050/"
+        port: "/saudi"
     },
     {
         id: 5,
         image: "/svg/flag.svg",
         title: "Hong Kong",
-        port: "http://18.218.201.198:8048/"
+        port: "/hk"
     }
 ]
 
