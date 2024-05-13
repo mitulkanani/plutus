@@ -69,7 +69,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
                         buy: parseSection(sections[0].replace("Buy:", "")),
                         sell: parseSection(sections[1]),
                     };
-                    // setCallOptionsData(result.buy as any);
+                    setCallOptionsData(result.buy as any);
                     setPutOptionsData(result.sell as any);
                     setIsSpinner(false);
                 })
@@ -84,7 +84,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
     return (
         <div className='bg-[#1c1c21] relative flex justify-center items-center'>
-            <div className='pt-10 container flex justify-center h-[calc(100vh+78px)]  mx-auto'>
+            <div className='pt-10 container flex justify-center h-[calc(100vh+40px)]  mx-auto'>
                 <div className='absolute z-10 flex gap-16'>
                     <div className='pt-3'>
                         <Link className='flex gap-3' href={"/picks/equitymarkets"}>

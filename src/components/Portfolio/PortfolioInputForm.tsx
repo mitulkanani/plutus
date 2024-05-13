@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Derivative } from '@/services/http/derivative';
 import SavedData from './SavedData';
 import DerivativeSavedData from './DerivativeSavedData';
+import Spinner from '../Spinner/Spinner';
 
 
 interface FormValues {
@@ -23,6 +24,7 @@ const PortfolioInputForm = () => {
     const [isForm, setIsForm] = useState(false)
     const [isSavedData, setIsSavedData] = useState(false)
     const [isDerivativeSavedData, setIsDerivativeSavedData] = useState(false)
+    const [isSpinner, setIsSpinner] = useState(false)
     const formik = useFormik<FormValues>({
         initialValues: {
             years: "",
@@ -32,8 +34,8 @@ const PortfolioInputForm = () => {
             amount_0: ""
         },
         onSubmit: (values: FormValues) => {
+            setIsSpinner(true)
             console.log(values, "values")
-            setIsSubmit(true)
 
             const formData = new FormData();
             Object.entries(values).forEach(([key, value]) => {
@@ -43,8 +45,11 @@ const PortfolioInputForm = () => {
             Derivative.Portfolio("/portfolio/analysis", formData)
                 .then((res) => {
                     console.log(res)
+                    setIsSpinner(false)
+                    setIsSubmit(true)
                 }).catch((err) => {
                     console.log(err)
+                    setIsSpinner(false)
                 })
         },
     });
@@ -131,7 +136,11 @@ const PortfolioInputForm = () => {
                                             />
                                         </div>
                                     </div>
-                                    <button type="submit" onClick={() => riskAnalysisHandler("http://18.218.201.198:8026/")} className='text-white w-fit font-inter font-medium text-[18px] px-[20px] py-[8px] bg-[#3ca1ff] rounded-[8px]'>Submit</button>
+                                    <button type="submit" onClick={() => riskAnalysisHandler("http://18.218.201.198:8026/")} className='text-white w-[100px] font-inter font-medium text-[18px] px-[20px] py-[8px] bg-[#3ca1ff] rounded-[8px]'>
+                                        {
+                                            isSpinner ? <Spinner color="#1c1c21" textColor="#fff" /> : "Submit"
+                                        }
+                                    </button>
                                 </div>
                             </form>
                         </div>

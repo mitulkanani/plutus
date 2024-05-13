@@ -4,6 +4,7 @@ import { AnalysisViewRegion } from '@/utils/content'
 import { useFormik } from 'formik'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import Spinner from '../Spinner/Spinner'
 
 interface FormValues {
     symbol: string;
@@ -13,11 +14,13 @@ const AnalysisView = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [isSubmit, setIsSubmit] = useState(false)
     const [isMarket, setIsMarket] = useState("")
+    const [isSpinner, setIsSpinner] = useState(false)
     const formik = useFormik({
         initialValues: {
             symbol: ""
         },
         onSubmit: async (values) => {
+            setIsSpinner(true)
             const formData = new FormData();
             Object.entries(values).forEach(([key, value]) => {
                 formData.append(key, String(value)); // Explicitly cast value to string
@@ -26,8 +29,10 @@ const AnalysisView = () => {
             Derivative.Portfolio(isMarket, formData)
                 .then((res) => {
                     console.log(res)
+                    setIsSpinner(false)
                 }).catch((err) => {
                     console.log(err)
+                    setIsSpinner(false)
                 })
         },
     });
@@ -49,7 +54,12 @@ const AnalysisView = () => {
                                         value={formik.values.symbol}
                                         className='px-3 text-black text-[16px] font-inter py-2 rounded-[7px]'
                                     />
-                                    <button type="submit" className='text-white w-fit font-inter font-medium text-[18px] px-[20px] py-[8px] bg-[#3ca1ff] rounded-[8px]'>Submit</button>
+                                    <button type="submit" className='text-white w-fit font-inter font-medium text-[18px] px-[20px] py-[8px] bg-[#3ca1ff] rounded-[8px]'>
+
+                                        {
+                                            isSpinner ? <Spinner color="#1c1c21" textColor="#fff" /> : "Submit"
+                                        }
+                                    </button>
                                 </div>
                             </div>
                         </form>}

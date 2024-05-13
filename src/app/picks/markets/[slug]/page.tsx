@@ -36,39 +36,40 @@ const page = ({ params }: { params: { slug: string } }) => {
     };
 
     useEffect(() => {
-        setIsSpinner(true)
+        setIsSpinner(true);
         const filteredData: any = DifferentMarketsData.filter(item => item.title.toLowerCase().replace(/\s/g, '').includes(params.slug));
-        // Here you can also set the market data for further use
-        console.log(filteredData[0].port)
+
         Derivative.market(filteredData[0].port)
             .then((res) => {
-                // const sections = res.split("Sell:");
+                const sections = res.split("Sell:");
 
-                // // Function to convert comma-separated string to array of objects
-                // const parseSection = (sectionStr: string) => {
-                //     const symbols = sectionStr.trim().split(",");
-                //     return symbols.map((symbol) => ({ symbol }));
-                // };
+                // Function to convert comma-separated string to array of objects
+                const parseSection = (sectionStr: string) => {
+                    const symbols = sectionStr.trim().split(",").filter(symbol => symbol.trim() !== 'request');
+                    return symbols
+                        .map((symbol) => ({ symbol }))
+                        .filter((obj) => obj.symbol.trim().length > 0);
+                };
 
-                // // Creating the object with buy and sell keys
-                // const result = {
-                //     buy: parseSection(sections[0].replace("Buy:", "")),
-                //     sell: parseSection(sections[1]),
-                // };
-                // console.log(result)
-                // setIsCallOptionsData(result.buy as any)
-                // setIsPutOptionsData(result.sell as any)
-                setIsSpinner(false)
-            }
-            ).catch((err) => {
-                console.log(err)
-                setIsSpinner(false)
-            }
-            )
-    }, [])
+                // Creating the object with buy and sell keys
+                const result = {
+                    buy: parseSection(sections[0].replace("Buy:", "")),
+                    sell: parseSection(sections[1]),
+                };
+                console.log(result);
+                setIsCallOptionsData(result.buy as any);
+                setIsPutOptionsData(result.sell as any);
+                setIsSpinner(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsSpinner(false);
+            });
+    }, []);
+
 
     return (
-        <div className='bg-[#1c1c21] relative flex justify-center items-center overflow-y-hidden'>
+        <div className='bg-[#1c1c21] relative flex justify-center items-center'>
             <div className='container h-[calc(100vh-78px)] flex justify-center pt-10 mx-auto px-[15px]'>
                 <div className='flex flex-col absolute z-10 '>
                     <Link className='flex gap-3' href={"/picks/markets"}>
@@ -108,7 +109,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                                         :
                                         PutOptionsData.map((item: any, index) => {
                                             return (
-                                                <div key={index} className='flex justify-between px-[12px] py-[8px] rounded-[8px] bg-[#880909]'>
+                                                <div key={index} className='flex w-full justify-between px-[12px] py-[8px] rounded-[8px] bg-[#880909]'>
                                                     <div className='flex flex-col gap-[2px]'>
                                                         <span className='font-inter text-[16px] font-medium text-white'>{item.symbol}</span>
                                                         <span className='font-inter text-[14px] font-medium text-white opacity-50'>Call Option</span>

@@ -234,31 +234,31 @@ export const AnalysisViewRegion = [
         id: 1,
         image: "/svg/flag.svg",
         title: "India",
-        port: "/india"
+        port: "/analysis/india"
     },
     {
         id: 2,
         image: "/svg/flag.svg",
         title: "US",
-        port: "/us"
+        port: "/analysis/us"
     },
     {
         id: 3,
         image: "/svg/flag.svg",
         title: "UK",
-        port: "/uk"
+        port: "/analysis/uk"
     },
     {
         id: 4,
         image: "/svg/flag.svg",
         title: "Saudi",
-        port: "/saudi"
+        port: "/analysis/saudi"
     },
     {
         id: 5,
         image: "/svg/flag.svg",
         title: "Hong Kong",
-        port: "/hk"
+        port: "/analysis/hk"
     }
 ]
 

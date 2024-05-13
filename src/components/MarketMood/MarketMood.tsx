@@ -1,55 +1,61 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import ReactApexChart from 'react-apexcharts';
 import { Derivative } from '@/services/http/derivative';
+import { PieChart } from '@mui/x-charts';
+import Spinner from '../Spinner/Spinner';
 
 const MarketMood = () => {
-    useEffect(() => {
-        Derivative.market('http://18.218.201.198:8080/')
-            .then((res) => {
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-    }, [])
+  const [positivity, setIsPositivity] = useState(0)
+  const [negativity, setIsNegativity] = useState(0)
+  const [isSpinner, setIsSpinner] = useState(false)
 
-    const [chartData, setChartData] = useState<any>({
-        series: [50, 50],
-        options: {
-            chart: {
-                type: 'donut',
-            },
-            colors: ['#33FF57', '#FF5733'],
-            labels: ['Positivity', 'Negativity'],
-            legend: {
-                fontSize: '18px', 
-                style: {
-                    colors: ['#ffffff !important']
-                }
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 500
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
+  useEffect(() => {
+    setIsSpinner(true);
+    Derivative.market('mood')
+      .then((res) => {
+        const regex = /Negativity rate:([\d.]+)%Positivity rate:([\d.]+)%/;
+        const match = res.match(regex);
+        if (match) {
+          const negativityRate = parseFloat(match[1]);
+          const positivityRate = parseFloat(match[2]);
+          setIsNegativity(negativityRate);
+          setIsPositivity(positivityRate);
         }
-    });
+        setIsSpinner(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSpinner(false);
+      });
+  }, []);
 
-    return (
-        <div className='bg-[#1c1c21] relative flex justify-center h-[calc(100vh-78px)] items-start overflow-y-hidden'>
-            <div id="chart" className='pt-10 container flex justify-center w-[450px] mx-auto'>
-                <ReactApexChart options={chartData.options} series={chartData.series} type={chartData.options.chart.type as 'donut'} width={500} />
-            </div>
-            <div id="html-dist"></div>
-        </div>
-    );
+
+  return (
+    <div className='bg-[#1c1c21] relative flex justify-center h-[calc(100vh-78px)] items-start overflow-y-hidden'>
+      <div className='pt-10'>
+        {
+          isSpinner ? <Spinner color="#1c1c21" textColor="#fff" />
+            :
+            <PieChart
+              colors={['#e53e34', '#30d158']}
+              series={[
+                {
+                  data: [
+                    { id: 0, value: negativity, label: 'Negativity' },
+                    { id: 1, value: positivity, label: 'Positivity' }
+                  ],
+                },
+              ]}
+              width={600}
+              height={300}
+            />
+
+        }
+
+      </div>
+    </div>
+  );
 };
 
 export default MarketMood;

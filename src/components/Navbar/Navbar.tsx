@@ -26,7 +26,7 @@ const Navbar = () => {
     }
     console.log(activeTab)
     return (
-        <div className='border-b border-[#7c7c7e]'>
+        <div className='border-b border-[#7c7c7e] relative  z-[9999]'>
             <div className='flex justify-between px-[50px] container mx-auto h-[77px] items-center'>
                 <div>
                     <Link href={"/"} className='font-inter text-[#e0dcbb] font-semibold text-[32px]'>Plutus</Link>
