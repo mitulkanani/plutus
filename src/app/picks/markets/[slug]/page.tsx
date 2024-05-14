@@ -69,9 +69,9 @@ const page = ({ params }: { params: { slug: string } }) => {
 
 
     return (
-        <div className='bg-[#1c1c21] relative flex justify-center items-center'>
-            <div className='container h-[calc(100vh-78px)] flex justify-center pt-10 mx-auto px-[15px]'>
-                <div className='flex flex-col absolute z-10 '>
+        <div className='bg-[#1c1c21] relative flex justify-center min-h-[calc(100vh-78px)] '>
+            <div className='container relative z-50 flex justify-center pt-10 mx-auto px-[15px] '>
+                <div className='flex flex-col'>
                     <Link className='flex gap-3' href={"/picks/markets"}>
                         <Image
                             src="/svg/leftarrow.svg"
@@ -82,7 +82,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                         />
                         <span className='font-inter text-[18px] text-[#3ca1ff] font-medium'>Back</span>
                     </Link>
-                    <div className='mt-4 flex flex-col items-center'>
+                    <div className='my-4 flex flex-col items-center'>
                         <div className='flex flex-col gap-6 items-center'>
                             <p className='text-white font-semibold 2xl:text-[38px] text-[32px] font-inter'>Top 5 Derivative Picks for <span className='capitalize'>{countryMarket}</span> </p>
                             <div className='flex w-[1000px] '>
@@ -90,7 +90,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                                 <button className={`${callOption === 2 ? "border-b-[3px] border-[#880909]" : "border-b-[3px] border-[#26262a]"} text-white duration-200 pb-[8px] font-medium w-full text-[16px] font-inter`} onClick={() => SetCallOption(2)}>Put Options</button>
                             </div>
                         </div>
-                        <div className='flex flex-col justify-center items-center gap-5 mt-5 w-[1000px]'>
+                        <div id='stocks' className='flex flex-col justify-center items-center gap-5 mt-5 w-[1000px] overflow-y-scroll'>
                             {
                                 isSpinner ?
                                     <Spinner color="#1c1c21" textColor="#fff" />
@@ -102,7 +102,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                                                         <span className='font-inter text-[16px] font-medium text-white'>{item.symbol}</span>
                                                         <span className='font-inter text-[14px] font-medium text-white opacity-50'>Call Option</span>
                                                     </div>
-                                                    <button onClick={() => saveOption(item)} className='bg-[#3ca1ff] text-white font-inter px-[25px] text-[14px] font-medium rounded-[14px]'>Save</button>
+                                                    <button onClick={() => { saveOption(item) }} className='bg-[#3ca1ff] text-white font-inter px-[25px] text-[14px] font-medium rounded-[14px]'>Save</button>
                                                 </div>
                                             )
                                         })
@@ -123,7 +123,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                     </div>
                 </div>
             </div>
-            <div className='absolute opacity-40 w-full'>
+            <div className='absolute opacity-40 max-h-[calc(100vh-78px)] overflow-hidden w-full'>
                 <object
                     data="/svg/chart2.svg"
                     type="image/svg+xml"

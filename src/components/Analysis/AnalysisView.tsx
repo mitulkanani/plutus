@@ -26,7 +26,7 @@ const AnalysisView = () => {
                 formData.append(key, String(value)); // Explicitly cast value to string
             });
 
-            Derivative.Portfolio(isMarket, formData)
+            Derivative.Portfolio("https://18.218.201.198/analysis/us", formData)
                 .then((res) => {
                     console.log(res)
                     setIsSpinner(false)
@@ -40,7 +40,7 @@ const AnalysisView = () => {
     return (
         <>
             <div className='bg-[#1c1c21] relative flex justify-center items-center overflow-y-hidden'>
-                <div className='flex justify-between gap-20 items-start pt-20 container mx-auto h-[calc(100vh-78px)] '>
+                <div className='flex justify-between gap-20 items-start pl-10 pt-20 container mx-auto h-[calc(100vh-78px)] '>
                     {isSubmit &&
                         <form onSubmit={formik.handleSubmit} className=' w-fit container mx-auto flex flex-col'>
                             <div className='flex flex-col absolute z-10 gap-10 items-center'>

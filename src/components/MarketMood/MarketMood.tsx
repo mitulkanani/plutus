@@ -14,13 +14,25 @@ const MarketMood = () => {
     setIsSpinner(true);
     Derivative.market('mood')
       .then((res) => {
-        const regex = /Negativity rate:([\d.]+)%Positivity rate:([\d.]+)%/;
-        const match = res.match(regex);
-        if (match) {
-          const negativityRate = parseFloat(match[1]);
-          const positivityRate = parseFloat(match[2]);
-          setIsNegativity(negativityRate);
-          setIsPositivity(positivityRate);
+        try {
+          const parsedRes = JSON.parse(res); // Parse the JSON response
+          const response = parsedRes.response; // Extract the response string
+
+          const regex = /Positivity:([\d.]+)%,?\s*Negativity:([\d.]+)%/;
+          const match = response.match(regex);
+
+          if (match) {
+            const positivityRate = parseFloat(match[1]);
+            const negativityRate = parseFloat(match[2]);
+
+            console.log(positivityRate);
+            console.log(negativityRate);
+
+            setIsPositivity(positivityRate);
+            setIsNegativity(negativityRate);
+          }
+        } catch (err) {
+          console.log('Error parsing response:', err);
         }
         setIsSpinner(false);
       })
@@ -29,6 +41,7 @@ const MarketMood = () => {
         setIsSpinner(false);
       });
   }, []);
+
 
 
   return (

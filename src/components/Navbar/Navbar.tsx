@@ -26,7 +26,7 @@ const Navbar = () => {
     }
     console.log(activeTab)
     return (
-        <div className='border-b border-[#7c7c7e] relative  z-[9999]'>
+        <div className='border-b border-[#7c7c7e] relative z-[9999]'>
             <div className='flex justify-between px-[50px] container mx-auto h-[77px] items-center'>
                 <div>
                     <Link href={"/"} className='font-inter text-[#e0dcbb] font-semibold text-[32px]'>Plutus</Link>
@@ -36,7 +36,7 @@ const Navbar = () => {
                         {
                             navbarData.map((item, index) => {
                                 return (
-                                    <span key={index} onClick={() => { router.push(item.link), activeTabHandler(item.id) }} onMouseEnter={() => toggleMenu(item.id)} onMouseLeave={() => toggleMenu(item.id)} className={`${(activeIndex == item.id) || (activeTab as any == item.id) ? "text-[#365c7c]" : "text-white"} font-medium duration-200 cursor-pointer text-[16px] font-inter`}>{item.title}</span>
+                                    <Link href={item.link} key={index}  onMouseEnter={() => toggleMenu(item.id)} onMouseLeave={() => toggleMenu(item.id)} className={`${(activeIndex == item.id) || (activeTab as any == item.id) ? "text-[#365c7c]" : "text-white"} font-medium duration-200 cursor-pointer text-[16px] font-inter`}>{item.title}</Link>
                                 )
                             })
                         }
