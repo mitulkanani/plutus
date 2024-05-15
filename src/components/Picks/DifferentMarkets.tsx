@@ -46,13 +46,6 @@ const DifferentMarkets = ({ isMarkets, SetIsMarkets }: any) => {
                                 </div>
                             </div>
                             <div>
-                                <Image
-                                    src="/images/derivativesmarket.png"
-                                    alt="equity markets"
-                                    width={800}
-                                    height={800}
-                                    className=''
-                                />
                             </div>
                         </div>
                     </div>
