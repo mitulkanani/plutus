@@ -55,3 +55,11 @@ body {
 #stocks::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.negativity-label {
+  fill: #e53e34 !important; /* Custom color for Negativity label */
+}
+
+.positivity-label {
+  fill: #30d158 !important; /* Custom color for Positivity label */
+}
