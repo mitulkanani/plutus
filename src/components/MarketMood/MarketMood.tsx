@@ -14,8 +14,8 @@ const MarketMood = () => {
     Derivative.market("mood")
       .then((res) => {
         try {
-          const parsedRes = JSON.parse(res); // Parse the JSON response
-          const response = parsedRes.response; // Extract the response string
+          const parsedRes = JSON.parse(res);
+          const response = parsedRes.response;
 
           const regex = /Positivity:([\d.]+)%,?\s*Negativity:([\d.]+)%/;
           const match = response.match(regex);

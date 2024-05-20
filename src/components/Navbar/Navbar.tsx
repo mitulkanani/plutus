@@ -1,11 +1,14 @@
 "use client";
+import { useUser } from "@/context/useContext";
 import { navbarData } from "@/utils/content";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const path = usePathname();
+  const { user } = useUser();
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("activeTab");
@@ -26,7 +29,11 @@ const Navbar = () => {
   };
   console.log(activeTab);
   return (
-    <div className="border-b border-[#7c7c7e] relative z-[9999]">
+    <div
+      className={`${
+        !user ? "hidden" : "visible"
+      } border-b border-[#7c7c7e] relative z-[9999]`}
+    >
       <div className="flex justify-between px-[50px] container mx-auto h-[77px] items-center">
         <div>
           <Link
