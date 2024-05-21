@@ -27,6 +27,7 @@ const Navbar = () => {
     localStorage.setItem("activeTab", index as any);
     setActiveTab(localStorage.getItem("activeTab") as any);
   };
+  console.log(user);
   console.log(activeTab);
   return (
     <div

@@ -6,16 +6,21 @@ import { useUser } from "@/context/useContext";
 import Login from "@/components/LoginWithFirebase/Login";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner/Spinner";
+import { useEffect } from "react";
 
 export default function Home() {
   const { user } = useUser();
   const router = useRouter();
-  console.log(user);
-  if (user) {
-    router.push("/");
-  } else {
-    router.push("/login");
-  }
+
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      router.push("/");
+    } else {
+      router.push("/login");
+    }
+  }, [user, router]);
+
   return (
     <>
       <NextUIProvider>

@@ -1,12 +1,12 @@
-import Picks from '@/components/Picks/Picks'
-import React from 'react'
+import Picks from "@/components/Picks/Picks";
+import React from "react";
 
 const page = () => {
-    return (
-        <div>
-            <Picks />
-        </div>
-    )
-}
+  return (
+    <div>
+      <Picks />
+    </div>
+  );
+};
 
-export default page
+export default page;

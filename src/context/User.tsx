@@ -31,7 +31,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const userToken = localStorage.getItem(USER_AUTH_TOKEN);
+      const userToken = sessionStorage.getItem(USER_AUTH_TOKEN);
       console.log(userToken, "user token");
 
       if (userToken) {

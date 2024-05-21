@@ -5,21 +5,24 @@ import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
 import Spinner from "../Spinner/Spinner";
 import { USER_AUTH_TOKEN } from "@/context/User";
+import { useUser } from "@/context/useContext";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isSpinner, setIsSpinner] = useState(false);
   const router = useRouter();
+  const { setUser } = useUser();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsSpinner(true);
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      localStorage.setItem(USER_AUTH_TOKEN, "true");
-      setIsSpinner(false);
+      sessionStorage.setItem(USER_AUTH_TOKEN, "true");
       router.push("/picks"); // Redirect to admin page after successful login
+      setUser(true);
+      setIsSpinner(false);
     } catch (error) {
       setIsSpinner(false);
       console.error("Error logging in:", error);
