@@ -3,6 +3,7 @@ import "./globals.css";
 import { UserProvider } from "@/context/User";
 import LayoutCommon from "@/components/Layout/LayoutCommon";
 import Navbar from "@/components/Navbar/Navbar";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <UserProvider>
       <html lang="en">
         <body>
+          <Toaster position="top-right" />
           <LayoutCommon children={children} />
         </body>
       </html>

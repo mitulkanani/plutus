@@ -63,3 +63,37 @@ body {
 .positivity-label {
   fill: #30d158 !important; /* Custom color for Positivity label */
 }
+
+#structure::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+#structure::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+#structure::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+#structure::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@keyframes zoomInFade {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.zoom-in-fade {
+  animation: zoomInFade 0.4s ease forwards;
+}

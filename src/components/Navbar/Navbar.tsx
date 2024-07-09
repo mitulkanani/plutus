@@ -1,9 +1,10 @@
 "use client";
 import { useUser } from "@/context/useContext";
+import { checkTab } from "@/helper/checkTab";
 import { navbarData } from "@/utils/content";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -16,19 +17,13 @@ const Navbar = () => {
       return "";
     }
   });
-  const [isLogin, setIsLogin] = useState(false);
-  const router = useRouter();
   const toggleMenu = (index: any) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  const activeTabHandler = (index: any) => {
-    console.log(index);
-    localStorage.setItem("activeTab", index as any);
-    setActiveTab(localStorage.getItem("activeTab") as any);
-  };
   console.log(user);
   console.log(activeTab);
+  console.log(path);
   return (
     <div
       className={`${
@@ -54,9 +49,7 @@ const Navbar = () => {
                   onMouseEnter={() => toggleMenu(item.id)}
                   onMouseLeave={() => toggleMenu(item.id)}
                   className={`${
-                    activeIndex == item.id || (activeTab as any) == item.id
-                      ? "text-[#365c7c]"
-                      : "text-white"
+                    checkTab(item?.link, path) ? "text-[#365c7c]" : "text-white"
                   } font-medium duration-200 cursor-pointer text-[16px] font-inter`}
                 >
                   {item.title}

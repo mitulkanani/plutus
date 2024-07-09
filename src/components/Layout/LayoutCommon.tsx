@@ -14,9 +14,6 @@ const LayoutCommon = ({
   const path = usePathname();
   const [showSpinner, setShowSpinner] = useState(true);
 
-  console.log("Current path:", path);
-  console.log("isSpinner state:", isSpinner);
-
   const shouldShowNavbar = path !== "/login";
   console.log(shouldShowNavbar);
   useEffect(() => {
