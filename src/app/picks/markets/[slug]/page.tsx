@@ -28,7 +28,7 @@ const page = ({ params }: { params: { slug: string } }) => {
   const [customInterval, setCustomInterval] = useState<any>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCustomInterval, setIsCustomInterval] = useState(false);
-  const [isSendEmail, setIsSendEmail] = useState(false);
+  const [isSendEmail, setIsSendEmail] = useState(true);
   const [timeUnit, setTimeUnit] = useState("minutes");
   console.log(params.slug);
 
@@ -58,6 +58,9 @@ const page = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     setIsSpinner(true);
+    setTimeout(() => {
+      setIsSendEmail(true);
+    }, 8000);
     const filteredData: any = DifferentMarketsData.filter((item) =>
       item.title.toLowerCase().replace(/\s/g, "").includes(params.slug)
     );
@@ -86,11 +89,9 @@ const page = ({ params }: { params: { slug: string } }) => {
         console.log(result);
         setIsCallOptionsData(result.buy as any);
         setIsPutOptionsData(result.sell as any);
-        setIsSpinner(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsSpinner(false);
       });
   }, []);
 

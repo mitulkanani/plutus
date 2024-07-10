@@ -62,10 +62,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     setIsSpinner(true);
-
-    if (isSendEmail) {
-      toast.success("Please check your registered email address");
-    }
+    setTimeout(() => {
+      setIsSendEmail(true);
+    }, 8000);
     const portMap: { [key: string]: string } = {
       indian: "indianPort",
       american: "usport",
@@ -99,11 +98,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
           };
           setCallOptionsData(result.buy as any);
           setPutOptionsData(result.sell as any);
-          setIsSpinner(false);
         })
         .catch((err) => {
           console.log(err);
-          setIsSpinner(false);
         });
     } else {
       setIsSpinner(false);
