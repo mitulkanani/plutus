@@ -60,7 +60,7 @@ const page = ({ params }: { params: { slug: string } }) => {
     setIsSpinner(true);
     setTimeout(() => {
       setIsSendEmail(true);
-    }, 8000);
+    }, 60000);
     const filteredData: any = DifferentMarketsData.filter((item) =>
       item.title.toLowerCase().replace(/\s/g, "").includes(params.slug)
     );

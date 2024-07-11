@@ -64,7 +64,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     setIsSpinner(true);
     setTimeout(() => {
       setIsSendEmail(true);
-    }, 8000);
+    }, 60000);
     const portMap: { [key: string]: string } = {
       indian: "indianPort",
       american: "usport",
