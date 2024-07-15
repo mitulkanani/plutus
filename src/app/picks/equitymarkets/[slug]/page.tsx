@@ -62,9 +62,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     setIsSpinner(true);
-    setTimeout(() => {
-      setIsSendEmail(true);
-    }, 60000);
     const portMap: { [key: string]: string } = {
       indian: "indianPort",
       american: "usport",
@@ -81,7 +78,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
     if (port) {
       Derivative.market(port)
         .then((res) => {
-          setIsSendEmail(true);
           const responseString = JSON.parse(res).response;
           const sections = responseString.split("Sell:");
 
@@ -101,7 +97,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
         })
         .catch((err) => {
           console.log(err);
-        });
+        })
+
+        .finally(() => setIsSendEmail(true));
     } else {
       setIsSpinner(false);
     }

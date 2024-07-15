@@ -9,7 +9,7 @@ import {
 } from "@/utils/content";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { slug: string } }) => {
@@ -28,8 +28,11 @@ const page = ({ params }: { params: { slug: string } }) => {
   const [customInterval, setCustomInterval] = useState<any>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCustomInterval, setIsCustomInterval] = useState(false);
-  const [isSendEmail, setIsSendEmail] = useState(true);
+  const [isSendEmail, setIsSendEmail] = useState(false);
   const [timeUnit, setTimeUnit] = useState("minutes");
+  const [dropdownData, setDropdownData] = useState(intervalDerivativeOptions);
+  const path = usePathname();
+
   console.log(params.slug);
 
   const saveOption = (option: any) => {
@@ -58,16 +61,14 @@ const page = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     setIsSpinner(true);
-    setTimeout(() => {
-      setIsSendEmail(true);
-    }, 60000);
+    console.log(isSendEmail);
+    console.log(isSendEmail);
     const filteredData: any = DifferentMarketsData.filter((item) =>
       item.title.toLowerCase().replace(/\s/g, "").includes(params.slug)
     );
 
     Derivative.market(filteredData[0].port)
       .then((res) => {
-        setIsSendEmail(true);
         const sections = res.split("Sell:");
 
         // Function to convert comma-separated string to array of objects
@@ -92,7 +93,8 @@ const page = ({ params }: { params: { slug: string } }) => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsSendEmail(true));
   }, []);
 
   const handleCustomIntervalChange = (
@@ -124,6 +126,17 @@ const page = ({ params }: { params: { slug: string } }) => {
       setIsDropdownOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (path === "/picks/markets/american") {
+      setDropdownData(intervalDerivativeOptions);
+    } else {
+      const data = intervalDerivativeOptions.filter(
+        (item) => item.label.toLowerCase() !== "earnings"
+      );
+      setDropdownData(data);
+    }
+  }, []);
 
   return (
     <>
@@ -171,7 +184,7 @@ const page = ({ params }: { params: { slug: string } }) => {
                     className="absolute mt-2 bg-[#26303b] w-[150px] max-h-[250px] overflow-y-auto rounded-lg shadow-xl py-2 px-2 z-10"
                   >
                     <div className="flex flex-col">
-                      {intervalDerivativeOptions.map((group, groupIndex) => (
+                      {dropdownData.map((group, groupIndex) => (
                         <React.Fragment key={groupIndex}>
                           <span className="font-bold text-white">
                             {group.label}

@@ -29,7 +29,7 @@ export const navbarData = [
 export const DifferentEquityMarketsData = [
     {
         id: 1,
-        title: "indian Market",
+        title: "Indian Market",
         link: "/picks/equitymarkets/indian"
     },
     {
@@ -49,7 +49,7 @@ export const DifferentEquityMarketsData = [
     },
     {
         id: 5,
-        title: "Saudi Arebia Market",
+        title: "Saudi Arabia Market",
         link: "/picks/equitymarkets/saudiarebia"
     },
 ]
@@ -81,7 +81,7 @@ export const DifferentMarketsData = [
     },
     {
         id: 5,
-        title: "Saudi Arebia",
+        title: "Saudi Arabia",
         link: "/picks/markets/saudiarebia",
         port: "/saudi"
     },
@@ -274,6 +274,7 @@ export const intervalOptions = [
     {
       label: 'Other',
       options: [
+        { value: 'daily', label: 'Daily' },
         { value: 'weekly', label: 'Weekly' },
         { value: 'monthly', label: 'Monthly' },
         { value: 'quarterly', label: 'Quarterly' },
@@ -283,6 +284,12 @@ export const intervalOptions = [
     }
   ];
 export const intervalDerivativeOptions = [
+    {
+        label: 'Earnings',
+        options: [
+          { value: 'Earnings', label: 'Earnings' }
+        ]
+    },
     {
       label: 'Minutes',
       options: [
