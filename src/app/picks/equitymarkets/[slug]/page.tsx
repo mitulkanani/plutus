@@ -1,17 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import CustomInterval from "@/components/modals/CustomInterval";
 import Spinner from "@/components/Spinner/Spinner";
 import { Derivative } from "@/services/http/derivative";
-import {
-  CallOptionsData as CallOptionsDataType,
-  EquityMarketsData,
-  intervalOptions,
-  intervalsData,
-} from "@/utils/content";
+import { intervalOptions, intervalsData } from "@/utils/content";
 import Image from "next/image";
 import Link from "next/link";
-import CustomInterval from "@/components/modals/CustomInterval";
-import toast from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
 interface Option {
   symbol: string;
@@ -22,7 +16,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const [callOption, setCallOption] = useState(1);
   const [CallOptionsData, setCallOptionsData] = useState<Option[]>([]);
   const [PutOptionsData, setPutOptionsData] = useState<Option[]>([]);
-  const [interval, setInterval] = useState("15 minutes");
+  const [interval, setInterval] = useState("");
   const [isSpinner, setIsSpinner] = useState(false);
   const [isSave, setIsSave] = useState<number | null>(null);
   const [countryMarket, setCountryMarket] = useState(() => {
@@ -76,6 +70,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     )?.[portProperty];
 
     if (port) {
+      setIsSpinner(true);
       Derivative.market(port)
         .then((res) => {
           const responseString = JSON.parse(res).response;
@@ -135,7 +130,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
     }
   };
 
-  console.log(interval);
   return (
     <>
       <div className="bg-[#1c1c21] relative flex justify-center min-h-[calc(100vh-78px)]">
@@ -155,12 +149,36 @@ const Page = ({ params }: { params: { slug: string } }) => {
             </Link>
           </div>
           <div className="flex flex-col w-[1200px] gap-5 3xl:gap-16">
-            <div className="flex gap-6 items-center">
-              <span className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
+            <div className="flex justify-between items-center">
+              <div className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
                 Intraday
-              </span>
-              <div className="relative">
-                <div
+              </div>
+
+              <div className="flex flex-row justify-between items-center">
+                {intervalOptions.map((group, groupIndex) => (
+                  <React.Fragment key={groupIndex}>
+                    {/* <div className="font-bold text-white mr-2">
+                      {group.label}
+                    </div> */}
+                    {group.options.map((option, optionIndex) => (
+                      <button
+                        key={optionIndex}
+                        onClick={() => handleIntervalSelect(option.value)}
+                        className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2 "
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </React.Fragment>
+                ))}
+                <button
+                  onClick={() => handleIntervalSelect("custom")}
+                  className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2 "
+                >
+                  Custom
+                </button>
+
+                {/* <div
                   onClick={toggleDropdown}
                   className="flex items-center gap-4 bg-[#26303b] rounded-[16px] px-5 py-2  cursor-pointer"
                 >
@@ -175,8 +193,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
                       height={14}
                     />
                   </div>
-                </div>
-                {isDropdownOpen && (
+                </div> */}
+                {/* {isDropdownOpen && (
                   <div
                     id="structure"
                     className="absolute mt-2 bg-[#26303b] w-[150px] max-h-[250px] overflow-y-auto rounded-lg shadow-xl py-2 px-2 z-10"
@@ -208,26 +226,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
                       >
                         Custom
                       </button>
-                      {/* {interval === "custom" && (
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            value={customInterval}
-                            onChange={handleCustomIntervalChange}
-                            className="p-2 border rounded w-full"
-                            placeholder="Enter custom interval"
-                          />
-                          <button
-                            onClick={handleAddCustomInterval}
-                            className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
-                          >
-                            Add Custom Interval
-                          </button>
-                        </div>
-                      )} */}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
             <div className="flex flex-col gap-7 w-full">
