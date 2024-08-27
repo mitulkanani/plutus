@@ -3,26 +3,30 @@ import CustomInterval from "@/components/modals/CustomInterval";
 import Spinner from "@/components/Spinner/Spinner";
 import { Derivative } from "@/services/http/derivative";
 import {
-  DifferentMarketsData,
+  DifferentMarketsIntervalData,
   intervalDerivativeOptions,
   intervalOptions,
 } from "@/utils/content";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
+interface Option {
+  symbol: string;
+}
 
 const page = ({ params }: { params: { slug: string } }) => {
   const [callOption, SetCallOption] = useState(1);
-  const [CallOptionsData, setIsCallOptionsData] = useState([]);
-  const [PutOptionsData, setIsPutOptionsData] = useState([]);
+  const [CallOptionsData, setCallOptionsData] = useState<Option[]>([]);
+  const [PutOptionsData, setPutOptionsData] = useState<Option[]>([]);
   const [isSpinner, setIsSpinner] = useState(false);
-  const [interval, setInterval] = useState("15 minutes");
+  const [interval, setInterval] = useState("");
   const [countryMarket, setCountryMarket] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("CountryMarket") || "";
     } else {
-      return ""; // Or any other default value you want
+      return "";
     }
   });
   const [customInterval, setCustomInterval] = useState<any>("");
@@ -32,8 +36,6 @@ const page = ({ params }: { params: { slug: string } }) => {
   const [timeUnit, setTimeUnit] = useState("minutes");
   const [dropdownData, setDropdownData] = useState(intervalDerivativeOptions);
   const path = usePathname();
-
-  console.log(params.slug);
 
   const saveOption = (option: any) => {
     if (callOption === 1) {
@@ -61,41 +63,48 @@ const page = ({ params }: { params: { slug: string } }) => {
 
   useEffect(() => {
     setIsSpinner(true);
-    console.log(isSendEmail);
-    console.log(isSendEmail);
-    const filteredData: any = DifferentMarketsData.filter((item) =>
-      item.title.toLowerCase().replace(/\s/g, "").includes(params.slug)
-    );
+    const portMap: { [key: string]: string } = {
+      indian: "indianPort",
+      american: "usport",
+      uk: "ukport",
+      hongkong: "hongkongport",
+      saudiarebia: "saudiport",
+    };
+    let portProperty = portMap[params.slug];
+    const port = (
+      DifferentMarketsIntervalData?.find((item) => {
+        return item.title === interval;
+      }) as any
+    )?.[portProperty];
+    if (port) {
+      Derivative.market(port)
+        .then((res) => {
+          const responseString = JSON.parse(res).response;
+          const sections = responseString.split("Sell:");
 
-    Derivative.market(filteredData[0].port)
-      .then((res) => {
-        const sections = res.split("Sell:");
+          const parseSection = (sectionStr: string) => {
+            const symbols = sectionStr.trim().split(",");
+            return symbols
+              .map((symbol) => ({ symbol }))
+              .filter((obj) => obj.symbol.trim().length > 0);
+          };
 
-        // Function to convert comma-separated string to array of objects
-        const parseSection = (sectionStr: string) => {
-          const symbols = sectionStr
-            .trim()
-            .split(",")
-            .filter((symbol) => symbol.trim() !== "request");
-          return symbols
-            .map((symbol) => ({ symbol }))
-            .filter((obj) => obj.symbol.trim().length > 0);
-        };
-
-        // Creating the object with buy and sell keys
-        const result = {
-          buy: parseSection(sections[0].replace("Buy:", "")),
-          sell: parseSection(sections[1]),
-        };
-        console.log(result);
-        setIsCallOptionsData(result.buy as any);
-        setIsPutOptionsData(result.sell as any);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setIsSendEmail(true));
-  }, []);
+          const result = {
+            buy: parseSection(sections[0].replace("Buy:", "")),
+            sell: parseSection(sections[1]),
+          };
+          console.log(result);
+          setCallOptionsData(result.buy as any);
+          setPutOptionsData(result.sell as any);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setIsSendEmail(true));
+    } else {
+      setIsSpinner(false);
+    }
+  }, [params.slug, interval]);
 
   const handleCustomIntervalChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -157,79 +166,30 @@ const page = ({ params }: { params: { slug: string } }) => {
             </Link>
           </div>
           <div className="flex flex-col w-[1200px] gap-5 3xl:gap-16">
-            <div className="flex gap-6 items-center">
-              <span className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
+            <div className="flex justify-between items-center">
+              <div className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
                 Intraday
-              </span>
-              <div className="relative">
-                <div
-                  onClick={toggleDropdown}
-                  className="flex items-center gap-4 bg-[#26303b] rounded-[16px] px-5 py-2  cursor-pointer"
-                >
-                  <div className="bg-[#26303b] text-white w-fit">
-                    {interval}
-                  </div>
-                  <div>
-                    <Image
-                      src={"/svg/downarrow.svg"}
-                      alt="down arrow"
-                      width={14}
-                      height={14}
-                    />
-                  </div>
-                </div>
-                {isDropdownOpen && (
-                  <div
-                    id="structure"
-                    className="absolute mt-2 bg-[#26303b] w-[150px] max-h-[250px] overflow-y-auto rounded-lg shadow-xl py-2 px-2 z-10"
-                  >
-                    <div className="flex flex-col">
-                      {dropdownData.map((group, groupIndex) => (
-                        <React.Fragment key={groupIndex}>
-                          <span className="font-bold text-white">
-                            {group.label}
-                          </span>
-                          {group.options.map((option, optionIndex) => (
-                            <div
-                              onClick={() => handleIntervalSelect(option.value)}
-                              className="w-full hover:bg-[#3ca1ff] rounded"
-                            >
-                              <button
-                                key={optionIndex}
-                                className="text-white w-fit py-1 px-4"
-                              >
-                                {option.label}
-                              </button>
-                            </div>
-                          ))}
-                        </React.Fragment>
-                      ))}
-                      {/* <button
-                        className="text-white py-1 px-3 rounded hover:bg-[#3ca1ff] mt-2"
-                        onClick={() => handleIntervalSelect("custom")}
+              </div>
+              <div className="flex flex-row justify-between items-center">
+                {intervalOptions.map((group, groupIndex) => (
+                  <React.Fragment key={groupIndex}>
+                    {group.options.map((option, optionIndex) => (
+                      <button
+                        key={optionIndex}
+                        onClick={() => handleIntervalSelect(option.value)}
+                        className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2"
                       >
-                        Custom
-                      </button> */}
-                      {/* {interval === "custom" && (
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                value={customInterval}
-                                onChange={handleCustomIntervalChange}
-                                className="p-2 border rounded w-full"
-                                placeholder="Enter custom interval"
-                              />
-                              <button
-                                onClick={handleAddCustomInterval}
-                                className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
-                              >
-                                Add Custom Interval
-                              </button>
-                            </div>
-                          )} */}
-                    </div>
-                  </div>
-                )}
+                        {option.label}
+                      </button>
+                    ))}
+                  </React.Fragment>
+                ))}
+                <button
+                  onClick={() => handleIntervalSelect("custom")}
+                  className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2"
+                >
+                  Custom
+                </button>
               </div>
             </div>
             <div className="flex flex-col gap-6 ">
