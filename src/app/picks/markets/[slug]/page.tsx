@@ -135,6 +135,7 @@ const page = ({ params }: { params: { slug: string } }) => {
       Derivative.market(port)
         .then((res: string) => {
           setEmailData(res);
+          setIsSendEmail(true);
         })
         .catch((err) => {
           console.log(err);
@@ -326,12 +327,11 @@ const page = ({ params }: { params: { slug: string } }) => {
                   })
                 )}
               </div> */}
-            {isSpinner && (
+            {!isSendEmail ? (
               <div className="flex justify-center mt-5 items-center">
                 <Spinner color="#1c1c21" textColor="#fff" />
               </div>
-            )}
-            {isSendEmail && (
+            ) : (
               <div className="mt-10 flex gap-10 items-center">
                 <span className="text-[32px] font-semibold text ">
                   Please check your registered email address
