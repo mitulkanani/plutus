@@ -30,7 +30,14 @@ const Login = () => {
     setIsSpinner(true);
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const signInResponse = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      localStorage.setItem("userName", signInResponse?.user?.displayName || "");
+      localStorage.setItem("userEmail", signInResponse?.user?.email || "");
       sessionStorage.setItem(USER_AUTH_TOKEN, "true");
       router.push("/picks"); // Redirect to admin page after successful login
       setUser(true);
