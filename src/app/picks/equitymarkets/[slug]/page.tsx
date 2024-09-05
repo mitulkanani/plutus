@@ -1,6 +1,7 @@
 "use client";
 import CustomInterval from "@/components/modals/CustomInterval";
 import Spinner from "@/components/Spinner/Spinner";
+import { fetchCSVAndSendEmail } from "@/helper/sendEmail";
 import { Derivative } from "@/services/http/derivative";
 import { intervalOptions, intervalsData } from "@/utils/content";
 import Image from "next/image";
@@ -12,6 +13,8 @@ interface Option {
 }
 
 const Page = ({ params }: { params: { slug: string } }) => {
+  const userName = localStorage.getItem("userName");
+  const userEmail = localStorage.getItem("userEmail");
   const [activeIndex, setActiveIndex] = useState(0);
   const [callOption, setCallOption] = useState(1);
   const [CallOptionsData, setCallOptionsData] = useState<Option[]>([]);
@@ -29,6 +32,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const [customInterval, setCustomInterval] = useState<any>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCustomInterval, setIsCustomInterval] = useState(false);
+  const [emailData, setEmailData] = useState<string | null>(null);
   const [isSendEmail, setIsSendEmail] = useState(false);
   const [timeUnit, setTimeUnit] = useState("minutes");
   // Function to save the selected option
@@ -54,6 +58,56 @@ const Page = ({ params }: { params: { slug: string } }) => {
     }
   };
 
+  // old code are as follows and commented out if needed
+
+  // useEffect(() => {
+  //   setIsSpinner(true);
+  //   const portMap: { [key: string]: string } = {
+  //     indian: "indianPort",
+  //     american: "usport",
+  //     uk: "ukport",
+  //     hongkong: "hongkongport",
+  //     saudiarebia: "saudiport",
+  //   };
+
+  //   let portProperty = portMap[params.slug];
+  //   const port = (
+  //     intervalsData?.find((item) => item.title === interval) as any
+  //   )?.[portProperty];
+
+  //   if (port) {
+  //     setIsSpinner(true);
+  //     Derivative.market(port)
+  //       .then((res) => {
+  //         setEmailData(res);
+
+  //         const responseString = JSON.parse(res).response;
+  //         const sections = responseString.split("Sell:");
+
+  //         const parseSection = (sectionStr: string) => {
+  //           const symbols = sectionStr.trim().split(",");
+  //           return symbols
+  //             .map((symbol) => ({ symbol }))
+  //             .filter((obj) => obj.symbol.trim().length > 0);
+  //         };
+
+  //         const result = {
+  //           buy: parseSection(sections[0].replace("Buy:", "")),
+  //           sell: parseSection(sections[1]),
+  //         };
+  //         setCallOptionsData(result.buy as any);
+  //         setPutOptionsData(result.sell as any);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       })
+
+  //       .finally(() => setIsSendEmail(true));
+  //   } else {
+  //     setIsSpinner(false);
+  //   }
+  // }, [params.slug, interval]);
+
   useEffect(() => {
     setIsSpinner(true);
     const portMap: { [key: string]: string } = {
@@ -72,33 +126,28 @@ const Page = ({ params }: { params: { slug: string } }) => {
     if (port) {
       setIsSpinner(true);
       Derivative.market(port)
-        .then((res) => {
-          const responseString = JSON.parse(res).response;
-          const sections = responseString.split("Sell:");
-
-          const parseSection = (sectionStr: string) => {
-            const symbols = sectionStr.trim().split(",");
-            return symbols
-              .map((symbol) => ({ symbol }))
-              .filter((obj) => obj.symbol.trim().length > 0);
-          };
-
-          const result = {
-            buy: parseSection(sections[0].replace("Buy:", "")),
-            sell: parseSection(sections[1]),
-          };
-          setCallOptionsData(result.buy as any);
-          setPutOptionsData(result.sell as any);
+        .then((res: string) => {
+          setEmailData(res);
+          setIsSendEmail(true);
         })
         .catch((err) => {
           console.log(err);
+          setIsSendEmail(false);
         })
-
-        .finally(() => setIsSendEmail(true));
+        .finally(() => setIsSpinner(false));
     } else {
       setIsSpinner(false);
+      setIsSendEmail(false);
     }
   }, [params.slug, interval]);
+
+  // fetch file from server and send email to user
+  
+  useEffect(() => {
+    if (emailData) {
+      fetchCSVAndSendEmail(emailData, setIsSendEmail);
+    }
+  }, [emailData]);
 
   const handleCustomIntervalChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -120,6 +169,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   };
 
   const handleIntervalSelect = (value: string) => {
+    setIsSendEmail(false);
     if (value === "custom") {
       setIsCustomInterval(true);
       setInterval(value);
@@ -157,9 +207,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
               <div className="flex flex-row justify-between items-center">
                 {intervalOptions.map((group, groupIndex) => (
                   <React.Fragment key={groupIndex}>
-                    {/* <div className="font-bold text-white mr-2">
-                      {group.label}
-                    </div> */}
                     {group.options.map((option, optionIndex) => (
                       <button
                         key={optionIndex}
