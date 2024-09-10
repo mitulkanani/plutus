@@ -319,14 +319,14 @@ export const AnalysisViewRegion = [
 ];
 
 export const intervalOptions = [
-  {
-    label: "Minutes",
-    options: [
-      { value: "15 minutes", label: "15" },
-      { value: "30 minutes", label: "30" },
-      { value: "60 minutes", label: "60" },
-    ],
-  },
+  // {
+  //   label: "Minutes",
+  //   options: [
+  //     { value: "15 minutes", label: "15" },
+  //     { value: "30 minutes", label: "30" },
+  //     { value: "60 minutes", label: "60" },
+  //   ],
+  // },
   {
     label: "Other",
     options: [
