@@ -229,7 +229,7 @@ export const intervalsData = [
     indianPort: "/india/monthly",
     usport: "/us/monthly",
     ukport: "/uk/monthly",
-    hongkongport: "/uk/monthly",
+    hongkongport: "/hk/monthly",
     saudiport: "/saudi/monthly",
   },
 ];
