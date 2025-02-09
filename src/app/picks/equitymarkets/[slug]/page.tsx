@@ -279,7 +279,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
             </div>
             <div className="flex flex-col gap-7 w-full">
               <div className="text-white font-inter 2xl:text-[36px] text-[32px] font-semibold">
-                Top 5 Picks for {countryMarket} in {interval}
+                Processing...
               </div>
               <div className="mt-4 flex flex-col">
                 {/* <div className="flex w-full">
@@ -369,7 +369,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
                 {isSendEmail && (
                   <div className="mt-10 flex gap-10 items-center">
                     <span className="text-[32px] font-semibold text ">
-                      Please check your registered email address
+                      Email will be sent to the authorised email address.
                     </span>
                     <div className="bg-green-600 rounded-full p-2">
                       <Image
