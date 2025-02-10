@@ -334,8 +334,6 @@ export const intervalOptions = [
       { value: "weekly", label: "Weekly" },
       { value: "monthly", label: "Monthly" },
       { value: "quarterly", label: "Quarterly" },
-      { value: "half-yearly", label: "Half-Yearly" },
-      { value: "yearly", label: "Yearly" },
     ],
   },
 ];
