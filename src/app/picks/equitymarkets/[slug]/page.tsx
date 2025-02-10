@@ -200,7 +200,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
           <div className="flex flex-col w-[1200px] gap-5 3xl:gap-16">
             <div className="flex justify-between items-center">
               <div className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
-                Intraday
+                {countryMarket}
               </div>
 
               <div className="flex flex-row justify-between items-center">
@@ -217,12 +217,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
                     ))}
                   </React.Fragment>
                 ))}
-                <button
-                  onClick={() => handleIntervalSelect("custom")}
-                  className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2 "
-                >
-                  Custom
-                </button>
+                
 
                 {/* <div
                   onClick={toggleDropdown}
