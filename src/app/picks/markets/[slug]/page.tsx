@@ -217,7 +217,7 @@ const page = ({ params }: { params: { slug: string } }) => {
           <div className="flex flex-col w-[1200px] gap-5 3xl:gap-16">
             <div className="flex justify-between items-center">
               <div className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
-                Intraday
+                {countryMarket}
               </div>
               <div className="flex flex-row justify-between items-center">
                 {intervalOptions.map((group, groupIndex) => (
@@ -233,20 +233,11 @@ const page = ({ params }: { params: { slug: string } }) => {
                     ))}
                   </React.Fragment>
                 ))}
-                <button
-                  onClick={() => handleIntervalSelect("custom")}
-                  className="text-center text-white py-1 px-2 min-w-[50px] rounded-[32px] bg-[#066fd2] hover:bg-[#066fd2] mr-2"
-                >
-                  Custom
-                </button>
               </div>
             </div>
             <div className="flex flex-col gap-6 ">
               <p className="text-white font-semibold 2xl:text-[38px] text-[32px] font-inter">
-                Top 5 Equity Derivative picks for{" "}
-                <span className="capitalize">
-                  {countryMarket} in {interval}
-                </span>{" "}
+                Processing...
               </p>
               {/* <div className="flex w-full ">
                 <button
@@ -334,7 +325,7 @@ const page = ({ params }: { params: { slug: string } }) => {
             {isSendEmail && (
               <div className="mt-10 flex gap-10 items-center">
                 <span className="text-[32px] font-semibold text ">
-                  Please check your registered email address
+                  Email will be sent to the authorised email address.
                 </span>
                 <div className="bg-green-600 rounded-full p-2">
                   <Image
