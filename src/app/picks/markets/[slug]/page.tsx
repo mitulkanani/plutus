@@ -217,7 +217,7 @@ const page = ({ params }: { params: { slug: string } }) => {
           <div className="flex flex-col w-[1200px] gap-5 3xl:gap-16">
             <div className="flex justify-between items-center">
               <div className="text-white font-inter 2xl:text-[38px] text-[32px] font-semibold">
-                {countryMarket}
+                {countryMarket} Market
               </div>
               <div className="flex flex-row justify-between items-center">
                 {intervalOptions.map((group, groupIndex) => (
