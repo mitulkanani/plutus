@@ -3,27 +3,7 @@ export const navbarData = [
     id: 1,
     title: "Picks",
     link: "/picks",
-  },
-  {
-    id: 2,
-    title: "Market Mood",
-    link: "/marketmood",
-  },
-  {
-    id: 3,
-    title: "Portfolio",
-    link: "/portfolio",
-  },
-  {
-    id: 4,
-    title: "News",
-    link: "/news",
-  },
-  {
-    id: 5,
-    title: "Analysis",
-    link: "/analysis",
-  },
+  }
 ];
 
 export const DifferentEquityMarketsData = [
