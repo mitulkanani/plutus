@@ -273,7 +273,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
               </div>
             </div>
             <div className="flex flex-col gap-7 w-full">
-              {interval && ( // Only show this section when an interval is selected
+              {interval && isSpinner && (  // Only show this section when an interval is selected
                 <div className="text-white font-inter 2xl:text-[36px] text-[32px] font-semibold">
                   Processing...
                 </div>
