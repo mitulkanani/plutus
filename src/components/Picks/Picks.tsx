@@ -16,7 +16,7 @@ const Picks = () => {
         <div className="container mx-auto h-[calc(100vh-78px)]  justify-center items-center flex gap-7">
           <div className="flex flex-col gap-6 items-center absolute z-10">
             <span className="text-white font-semibold text-[48px] font-inter">
-              Explore Different Derivative Picks
+              Explore Different Equity Markets
             </span>
             <div className="flex gap-10">
               <button
@@ -27,17 +27,7 @@ const Picks = () => {
                 onMouseLeave={() => togglePicks(0)}
                 onClick={() => router.push("/picks/equitymarkets")}
               >
-                Equity Recommendation
-              </button>
-              <button
-                className={`${
-                  color === 2 ? "bg-[#066fd2]" : "bg-[#066fd2]"
-                } text-white duration-200 px-[50px] py-[8px] rounded-[32px] font-medium text-[18px] font-inter`}
-                onMouseEnter={() => togglePicks(2)}
-                onMouseLeave={() => togglePicks(0)}
-                onClick={() => router.push("/picks/markets")}
-              >
-                Equity Derivative
+                Equity Recommendations
               </button>
             </div>
           </div>
